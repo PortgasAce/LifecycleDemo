@@ -15,17 +15,12 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     mCounterTv = findViewById(R.id.counter);
     mCounterDelegate = new CounterDelegate(mCounterTv);
+    getLifecycle().addObserver(mCounterDelegate);
   }
 
   @Override
-  protected void onResume() {
-    super.onResume();
-    mCounterDelegate.onResume();
-  }
-
-  @Override
-  protected void onPause() {
-    super.onPause();
-    mCounterDelegate.onPause();
+  protected void onDestroy() {
+    super.onDestroy();
+    getLifecycle().removeObserver(mCounterDelegate);
   }
 }
